@@ -69,8 +69,7 @@
 #include <ctime>
 
 #include "finiteStateMachine.h"
-#include "Pinmask.h"
-#include "Threads.h"
+#include "GpiosAndFunctions.h"
 
 using namespace std;
 
@@ -95,23 +94,6 @@ double deltaTime;
 
 finiteStateMachine fsm;
 
-/*
-bool GPIO[34];
-
-bool Flag_TELECOM_Active=0;
-bool Flag_Analog_Active=0;
-bool Flag_GPS_Active=0;
-bool Flag_Iridium_Active=0;
-bool Flag_Radex_Active=0;
-bool Flag_RaspberryPi_WD_Active=0;
-bool Flag_ADCS_Active=0;
-bool Flag_BatteryManagement_Active=0;
-bool Flag_Hardware_Watchdog_Active=0;
-bool Flag_Transmission_Watchdog_Active=0;
-*/
-
-
-
 int main() {
 
 	cout << " - The FEES System has Started - " << endl << endl;
@@ -127,7 +109,7 @@ int main() {
 
 	thread threadUserShell(thread_UserShell); // Gestisce l'output a stampa su schermo
 
-  /*
+
 	//ThreadS che gestiscono le funzioni di sistema
 
 	thread threadADCS( thread_ADCS);
@@ -135,7 +117,6 @@ int main() {
 	thread threadHardwareWD( thread_HardwareWD);
 	thread threadTransmissionWD(thread_TransmissionWD);
 
-  */
 
 	    while(1){
 			cout << "--> Dai un comando - Esegui un evento: " << endl << endl;

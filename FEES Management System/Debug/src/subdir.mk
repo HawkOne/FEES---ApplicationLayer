@@ -4,20 +4,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../src/Pinmask.cpp \
-../src/Threads.cpp \
+../src/GpiosAndFunctions.cpp \
 ../src/finiteStateMachine.cpp \
 ../src/main.cpp 
 
 OBJS += \
-./src/Pinmask.o \
-./src/Threads.o \
+./src/GpiosAndFunctions.o \
 ./src/finiteStateMachine.o \
 ./src/main.o 
 
 CPP_DEPS += \
-./src/Pinmask.d \
-./src/Threads.d \
+./src/GpiosAndFunctions.d \
 ./src/finiteStateMachine.d \
 ./src/main.d 
 

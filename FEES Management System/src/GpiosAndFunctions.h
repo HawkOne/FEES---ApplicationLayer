@@ -53,18 +53,103 @@
  *                                                                                                 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
- * File:Threads.h
+ * FILE:Pinmask.h
  *
- *  Created on: 1 mag 2019
+ *  Created on: 14 mar 2019
  *      Author: Stefano
  */
 
+#ifndef PINMASK_H
+#define PINMASK_H
+
+#include <iostream>
+#include <cstdint>
+#include "finiteStateMachine.h"
+#include "GpioMapper.h"
+#include "finiteStateMachine.h"
+
+using namespace std;
 
 
-#ifndef THREADS_H_
-#define THREADS_H_
 
-#include "Pinmask.h"
+void Update_Pin_Mask(int NewState);
+
+void Pin_Mask_All_OFF();
+void Pin_Mask_InVector();
+void Pin_Mask_Wait();
+void Pin_Mask_Detumble();
+void Pin_Mask_Nominal();
+void Pin_Mask_Transmission();
+void Pin_Mask_RADEX();
+
+// There is an important difference Between Lowercase and UPPERCASE
+// RESET is the action of turning off - waiting and on again a device
+// Reset instead is for setting to 0 the GPIO pin.
+void GpioSet(int pin);
+void GpioReset(int pin);
+// The 2 Funcions Above are used to Set==PUT TO 1 and Reset=PUT TO 0 the GPIO pins ATOMICALLY
+
+// User-friendly -STUB Functions
+void print_PinMask();
+void print_ThreadsAndManagers();
+
+void print_ADCS_State();
+void print_BatteryManagement_State();
+
+// // // POWER MANAGEMENT Functions
+void System_Reboot();  // Salva i dati critici nella memoria e resetta il sistema.
+
+/**********| TELECOM DEVICE-PAYLOAD       (PC13)*(GPIO 0 )   ******/
+void TELECOM_PowerON();
+void TELECOM_PowerOFF();
+void TELECOM_PowerRESET();
+
+/**********| Analog_DEVICES-PAYLOAD       (PE0)*(GPIO 2 )    ******/
+void Analog_PowerON();
+void Analog_PowerOFF();
+void Analog_PowerRESET();
+
+/**********| GPS DEVICE-PAYLOAD           (PE2)*( GPIO 1 )   ******/
+void GPS_PowerON();
+void GPS_PowerOFF();
+void GPS_PowerRESET();
+
+/**********| Iridium Trasmitter PAYLOAD   (PE3)*(GPIO 29)    ******/
+void Iridium_PowerON();
+void Iridium_PowerOFF();
+void Iridium_PowerRESET();
+
+/**********| RAD-Experiment PAYLOAD    (PE1)*( GPIO 5 )      ******/
+void Radex_PowerON();
+void Radex_PowerOFF();
+void Radex_PowerRESET();
+void Radex_SignalRESET();   // Signal GPIO 6 - This RESETS THE 32BitAdc
+
+// RADEX SIGNAL
+void RADEX();
+
+/**********| RASPBERRY-Pi CONTROL - (GPIO 3 - 4)  ******     ******/
+void RaspberryPi_PowerON();			// GPIO 3
+void RaspberryPi_PowerOFF();
+void RaspberryPi_PowerRESET();
+//GpioReset(RASPY_ON);
+//RASPY_KEEP-on thread); 	//KeepON(AliveSignal)  - GPIO 4
+void RaspberryPi_Watchdog(); // Questa funzione fa partire il Thread tiene acceso il RaspberryPi
+
+/**********| MagnetoTorquerControl - ADCS SYSTEM  ***** 	******/
+void ADCS_ON();
+void ADCS_OFF();
+
+/**********| BATTERY THERMAL Control SYSTEM  (PWM 4)(GPIO 14)*/
+// BATTERY HEATER PWM - GPIO 14
+void BatteryThermal_Management_ON();
+void BatteryThermal_Management_OFF();
+
+/**********| WatchDog  Control 	**********************		******/
+void Hardware_Watchdog(); // Questa funzione fa partire il Thread che gestisce il Watchdog Hardware
+
+/**********| LED - TELECOM WATCHDOG  Control  (GPIO 19) *** ******/
+void Transmission_Watchdog(); // Questa funzione fa partire il Thread che gestisce Led-Watchdog
 
 // Thread for FiniteStateMachine Handling
 void thread_Fsm(); // 1Hz Thread loop
@@ -80,4 +165,4 @@ void thread_TransmissionWD();
 
 
 
-#endif /* THREADS_H_ */
+#endif // PINMASK_H

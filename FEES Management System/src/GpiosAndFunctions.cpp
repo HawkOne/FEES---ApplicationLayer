@@ -61,8 +61,9 @@
 
 
 
+#include "GpiosAndFunctions.h"
+
 #include "finiteStateMachine.h"
-#include "Pinmask.h"
 #include <iostream>
 #include <cstdint>
 #include <thread>
@@ -1062,3 +1063,47 @@ void Transmission_Watchdog(){ // Questa funzione fa partire il Thread che gestis
 
 }
 
+
+// Complex Systems - Thread Functions
+void thread_ADCS(){
+	if(Flag_ADCS_Active == 1){
+		// ADCS Algorithm Zone
+
+	}
+
+}
+void thread_BatteryPID(){
+	if(Flag_BatteryManagement_Active==1){
+		// PID Function Zone
+
+	}
+
+}
+
+// Watchdog Thread Functions
+void thread_HardwareWD(){ 		// GPIO 20
+	// ACTUAL CHIBIOS FUNCTION
+	while(1){
+		if(Flag_Hardware_Watchdog_Active==1){
+			//hal.gpio->write( 20 , 1 );
+			//std::this_thread::sleep_for(std::chrono::milliseconds(50));
+			//hal.gpio->write( 20, 0 );
+			//std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		}}
+}
+void thread_TransmissionWD(){ 	// GPIO 19
+	// ACTUAL CHIBIOS FUNCTION
+		while(1){
+			if(Flag_Transmission_Watchdog_Active==1){
+				//hal.gpio->write( 19 , 1 );
+				//std::this_thread::sleep_for(std::chrono::milliseconds(50));
+				//hal.gpio->write( 19, 0 );
+				//std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+				// Inserire la funzione
+				// Trasmetti BEACON
+				// Cerca GroundStationBeacon --> fsm.beacon_received=TRUE; //se trovata
+
+			}
+		}
+}

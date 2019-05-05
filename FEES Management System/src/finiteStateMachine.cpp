@@ -64,7 +64,8 @@
 #include "finiteStateMachine.h"
 #include <iostream>
 #include <cstdint>
-#include "Pinmask.h"
+
+#include "GpiosAndFunctions.h"
 
 using namespace std;
 
