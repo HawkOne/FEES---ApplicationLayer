@@ -20,7 +20,9 @@
 #include <limits.h>
 
 #include "../src/finiteStateMachine.h"
+#include "../src/GpioMapper.h"
 #include "../src/GpiosAndFunctions.h"
+
 
 using namespace std;
 
