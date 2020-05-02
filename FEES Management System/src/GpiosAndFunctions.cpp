@@ -18,16 +18,15 @@
  *      F::::::::FF           E::::::::::::::::::::EE::::::::::::::::::::ES:::::::::::::::SS       *
  *      FFFFFFFFFFF           EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE SSSSSSSSSSSSSSS         *
  *												   												   *
- *               ____    ___     __      ___    ___    __  ___ __       ___   ___        	   	   *
- *               |__ |   |__ \_/||__)|   |__    |__ \_/|__)|__ |__)||\/||__ |\ || /\ |    	       *
- *               |   |___|___/ \||__)|___|___   |___/ \|   |___|  \||  ||___| \||/~~\|___ 	       *
- *                         ___     __  ___ __  __  ___ __     __     ________         		       *
- *                        |__ |\/||__)|__ |  \|  \|__ |  \   /__`\ //__`||__ |\/|     		       *
- *                        |___|  ||__)|___|__/|__/|___|__/   .__/ | .__/||___|  |     		       *
- *                                                                                       	       *
+ *                  __    __     __     __   __    __  __ __       __    ___                       *
+ *                 |_ |  |_ \_/||__)|  |_   |_ \_/|__)|_ |__)||\/||_ |\ | |  /\ |                  *
+ *                 |  |__|__/ \||__)|__|__  |__/ \|   |__| \ ||  ||__| \| | /--\|__                *
+ *                    __     __  __ __  __  __ __    __   ___ __       ___ __                      *
+ *                   |_ |\/||__)|_ |  \|  \|_ |  \  (_  /\ | |_ |  |  | | |_                       *
+ *                   |__|  ||__)|__|__/|__/|__|__/  __)/--\| |__|__|__| | |__                      *
+ *                                                                                                 *
  *												    											   *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *												   												   *
  *												   												   *
  *											FEES Project			 					           *
  *		    			URL: https://github.com/ferrandi/DEIB-DAER-project		                   *
@@ -36,20 +35,20 @@
  *		 			  ***********************************************************                  *
  *        		 	   		Copyright (c) 2018-2019 Politecnico di Milano				   		   *
  *                                                                                                 *
- *   This file is part of the FEES framework.                                                      *
+ *     This file is part of the FEES framework.                                                    *
  *                                                                                                 *
- *   The FEES framework is free software; you can redistribute it and/or modify                    *
- *   it under the terms of the GNU General Public License as published by                          *
- *   the Free Software Foundation; either version 3 of the License, or                             *
- *   (at your option) any later version.                                                           *
+ *     The FEES framework is free software; you can redistribute it and/or modify                  *
+ *     it under the terms of the GNU General Public License as published by                        *
+ *     the Free Software Foundation; either version 3 of the License, or                           *
+ *     (at your option) any later version.                                                         *
  *                                                                                                 *
- *   This program is distributed in the hope that it will be useful,                           	   *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of                                *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                                 *
- *   GNU General Public License for more details.                                                  *
+ *     This program is distributed in the hope that it will be useful,                             *
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of                              *
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                               *
+ *     GNU General Public License for more details.                                                *
  *                                                                                                 *
- *   You should have received a copy of the GNU General Public License                             *
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.                         *
+ *     You should have received a copy of the GNU General Public License                           *
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.                       *
  *                                                                                                 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
@@ -785,7 +784,7 @@ void print_ThreadsAndManagers(){
 // // // POWER MANAGEMENT Functions
 void System_Reboot(){
 	// Da scrivere qui una routine che spenga prima tutti i devices-Payloads,
-	// Salvi in memoria FeRam (statica) tutto il buffer-ram e poi faccia un restart della STM32.
+	// Salvi in memoria FeRam (statica) tutto il buffer-ram e poi faccia un restart della STM32. Fermando il thread hardware watchdog
  Analog_PowerOFF();
  GPS_PowerOFF();
  TELECOM_PowerOFF();
@@ -1047,20 +1046,29 @@ void BatteryThermal_Management_OFF(){
 }
 
 /**********| WatchDog  Control 	**********************		******/
-void Hardware_Watchdog(){ // Questa funzione fa partire il Thread che gestisce il Watchdog Hardware
+void Hardware_Watchdog_ON(){ // Questa funzione fa partire il Thread che gestisce il Watchdog Hardware
 
 	Flag_Hardware_Watchdog_Active = TRUE;
 	cout << "  Thread Watchdog Hardware Lanciato! " << endl;
-
-
 }
 
-/**********| LED - TELECOM WATCHDOG  Control  (GPIO 19) *** ******/
-void Transmission_Watchdog(){ // Questa funzione fa partire il Thread che gestisce Led-Watchdog
+void Hardware_Watchdog_OFF(){ // Questa funzione ferma Thread che gestisce il Watchdog Hardware
 
+	Flag_Hardware_Watchdog_Active = FALSE;
+	cout << "  Thread Watchdog Hardware Fermato! " << endl;
+	cout << "  Sistema in Spegnimento ...  " << endl;
+}
+
+
+
+/**********| LED - TELECOM WATCHDOG  Control  (GPIO 19) *** ******/
+void Transmission_Watchdog_ON(){ // Questa funzione fa partire il Thread che gestisce Led-Watchdog
 	Flag_Transmission_Watchdog_Active = TRUE;
 	cout << "  Thread Watchdog Transmission-Module Lanciato! " << endl;
-
+}
+void Transmission_Watchdog_OFF(){ // Questa funzione Ferma il Thread che gestisce Led-Watchdog
+	Flag_Transmission_Watchdog_Active = FALSE;
+	cout << "  Thread Watchdog Transmission-Module Fermato! " << endl;
 }
 
 
@@ -1099,11 +1107,9 @@ void thread_TransmissionWD(){ 	// GPIO 19
 				//std::this_thread::sleep_for(std::chrono::milliseconds(50));
 				//hal.gpio->write( 19, 0 );
 				//std::this_thread::sleep_for(std::chrono::milliseconds(50));
-
-				// Inserire la funzione
-				// Trasmetti BEACON
-				// Cerca GroundStationBeacon --> fsm.beacon_received=TRUE; //se trovata
-
-			}
+				}
 		}
+		// Inserire la funzione
+		// Trasmetti BEACON
+		// Cerca GroundStationBeacon --> fsm.beacon_received=TRUE; //se trovata
 }

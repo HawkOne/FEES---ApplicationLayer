@@ -18,16 +18,15 @@
  *      F::::::::FF           E::::::::::::::::::::EE::::::::::::::::::::ES:::::::::::::::SS       *
  *      FFFFFFFFFFF           EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE SSSSSSSSSSSSSSS         *
  *												   												   *
- *               ____    ___     __      ___    ___    __  ___ __       ___   ___        	   	   *
- *               |__ |   |__ \_/||__)|   |__    |__ \_/|__)|__ |__)||\/||__ |\ || /\ |    	       *
- *               |   |___|___/ \||__)|___|___   |___/ \|   |___|  \||  ||___| \||/~~\|___ 	       *
- *                         ___     __  ___ __  __  ___ __     __     ________         		       *
- *                        |__ |\/||__)|__ |  \|  \|__ |  \   /__`\ //__`||__ |\/|     		       *
- *                        |___|  ||__)|___|__/|__/|___|__/   .__/ | .__/||___|  |     		       *
- *                                                                                       	       *
+ *                  __    __     __     __   __    __  __ __       __    ___                       *
+ *                 |_ |  |_ \_/||__)|  |_   |_ \_/|__)|_ |__)||\/||_ |\ | |  /\ |                  *
+ *                 |  |__|__/ \||__)|__|__  |__/ \|   |__| \ ||  ||__| \| | /--\|__                *
+ *                    __     __  __ __  __  __ __    __   ___ __       ___ __                      *
+ *                   |_ |\/||__)|_ |  \|  \|_ |  \  (_  /\ | |_ |  |  | | |_                       *
+ *                   |__|  ||__)|__|__/|__/|__|__/  __)/--\| |__|__|__| | |__                      *
+ *                                                                                                 *
  *												    											   *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *												   												   *
  *												   												   *
  *											FEES Project			 					           *
  *		    			URL: https://github.com/ferrandi/DEIB-DAER-project		                   *
@@ -36,20 +35,20 @@
  *		 			  ***********************************************************                  *
  *        		 	   		Copyright (c) 2018-2019 Politecnico di Milano				   		   *
  *                                                                                                 *
- *   This file is part of the FEES framework.                                                      *
+ *     This file is part of the FEES framework.                                                    *
  *                                                                                                 *
- *   The FEES framework is free software; you can redistribute it and/or modify                    *
- *   it under the terms of the GNU General Public License as published by                          *
- *   the Free Software Foundation; either version 3 of the License, or                             *
- *   (at your option) any later version.                                                           *
+ *     The FEES framework is free software; you can redistribute it and/or modify                  *
+ *     it under the terms of the GNU General Public License as published by                        *
+ *     the Free Software Foundation; either version 3 of the License, or                           *
+ *     (at your option) any later version.                                                         *
  *                                                                                                 *
- *   This program is distributed in the hope that it will be useful,                           	   *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of                                *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                                 *
- *   GNU General Public License for more details.                                                  *
+ *     This program is distributed in the hope that it will be useful,                             *
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of                              *
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                               *
+ *     GNU General Public License for more details.                                                *
  *                                                                                                 *
- *   You should have received a copy of the GNU General Public License                             *
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.                         *
+ *     You should have received a copy of the GNU General Public License                           *
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.                       *
  *                                                                                                 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
@@ -67,6 +66,7 @@
 #include <iostream>
 #include <thread>
 #include <ctime>
+#include <limits.h>
 
 #include "finiteStateMachine.h"
 #include "GpiosAndFunctions.h"
@@ -75,13 +75,15 @@ using namespace std;
 
 
 
-void FSM();
+//void FSM();
 
 
 //  This part of the code is needed to create the wait function
-void wait ( int seconds ){	clock_t endwait;
-							endwait = clock () + seconds * CLOCKS_PER_SEC ;
-							while (clock() < endwait) {}  }
+void wait ( int seconds ){
+	clock_t endwait;
+	endwait = clock () + seconds * CLOCKS_PER_SEC ;
+	while (clock() < endwait) {}
+}
 
 
 void print_SystemTime();

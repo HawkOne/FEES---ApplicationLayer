@@ -18,16 +18,15 @@
  *      F::::::::FF           E::::::::::::::::::::EE::::::::::::::::::::ES:::::::::::::::SS       *
  *      FFFFFFFFFFF           EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE SSSSSSSSSSSSSSS         *
  *												   												   *
- *               ____    ___     __      ___    ___    __  ___ __       ___   ___        	   	   *
- *               |__ |   |__ \_/||__)|   |__    |__ \_/|__)|__ |__)||\/||__ |\ || /\ |    	       *
- *               |   |___|___/ \||__)|___|___   |___/ \|   |___|  \||  ||___| \||/~~\|___ 	       *
- *                         ___     __  ___ __  __  ___ __     __     ________         		       *
- *                        |__ |\/||__)|__ |  \|  \|__ |  \   /__`\ //__`||__ |\/|     		       *
- *                        |___|  ||__)|___|__/|__/|___|__/   .__/ | .__/||___|  |     		       *
- *                                                                                       	       *
+ *                  __    __     __     __   __    __  __ __       __    ___                       *
+ *                 |_ |  |_ \_/||__)|  |_   |_ \_/|__)|_ |__)||\/||_ |\ | |  /\ |                  *
+ *                 |  |__|__/ \||__)|__|__  |__/ \|   |__| \ ||  ||__| \| | /--\|__                *
+ *                    __     __  __ __  __  __ __    __   ___ __       ___ __                      *
+ *                   |_ |\/||__)|_ |  \|  \|_ |  \  (_  /\ | |_ |  |  | | |_                       *
+ *                   |__|  ||__)|__|__/|__/|__|__/  __)/--\| |__|__|__| | |__                      *
+ *                                                                                                 *
  *												    											   *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *												   												   *
  *												   												   *
  *											FEES Project			 					           *
  *		    			URL: https://github.com/ferrandi/DEIB-DAER-project		                   *
@@ -36,20 +35,20 @@
  *		 			  ***********************************************************                  *
  *        		 	   		Copyright (c) 2018-2019 Politecnico di Milano				   		   *
  *                                                                                                 *
- *   This file is part of the FEES framework.                                                      *
+ *     This file is part of the FEES framework.                                                    *
  *                                                                                                 *
- *   The FEES framework is free software; you can redistribute it and/or modify                    *
- *   it under the terms of the GNU General Public License as published by                          *
- *   the Free Software Foundation; either version 3 of the License, or                             *
- *   (at your option) any later version.                                                           *
+ *     The FEES framework is free software; you can redistribute it and/or modify                  *
+ *     it under the terms of the GNU General Public License as published by                        *
+ *     the Free Software Foundation; either version 3 of the License, or                           *
+ *     (at your option) any later version.                                                         *
  *                                                                                                 *
- *   This program is distributed in the hope that it will be useful,                           	   *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of                                *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                                 *
- *   GNU General Public License for more details.                                                  *
+ *     This program is distributed in the hope that it will be useful,                             *
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of                              *
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                               *
+ *     GNU General Public License for more details.                                                *
  *                                                                                                 *
- *   You should have received a copy of the GNU General Public License                             *
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.                         *
+ *     You should have received a copy of the GNU General Public License                           *
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.                       *
  *                                                                                                 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
@@ -87,6 +86,16 @@ enum state_t {
 
 
 
+// DEFINIZIONE DELLE CONSTANTI (IMPOSTAZIONI DI MISSIONE)
+const int CONST_SILENZIO_RADIO = 3600 ; // 30 min  --> Requisito di silenzio radio
+const int DETHUMBLING_TIMER  = 600 ; 	// 10 min  --> Timer massimo di Dethumbling
+const int CONST_RADEX_TIMER = 300;  	// 5 min --> Timer Time-Out del Rad-ex
+const int CONST_TRX_TIMER = 300;		// 5 min --> Timer Time-Out Trasmissione
+const float CONST_angular_velocity_Limit = 50;	// Valore di Angular_velocity_Limite (per concludere il dethumbling)
+
+
+
+
 
 
 class finiteStateMachine {
@@ -100,6 +109,8 @@ public:
 	void print_Variables();
 	void event_Handler();
 	void human_event_Handler(int a);
+	float sample_angular_velocity();
+
 
 	bool switch_vector;
 	bool beacon_received;
@@ -113,6 +124,8 @@ public:
 	float timer_for_radex;
 	float trx_timer;
 	float radex_timer;
+	float angular_velocity;
+
 
 	state_t previous_state;
 
@@ -126,7 +139,11 @@ private:
 };
 
 
+
 void Update_Pin_Mask(state_t NewState);
+
+
+
 
 #endif 	/* STATE_H */
 

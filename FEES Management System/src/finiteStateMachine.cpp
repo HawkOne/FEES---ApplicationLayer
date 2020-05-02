@@ -18,16 +18,15 @@
  *      F::::::::FF           E::::::::::::::::::::EE::::::::::::::::::::ES:::::::::::::::SS       *
  *      FFFFFFFFFFF           EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE SSSSSSSSSSSSSSS         *
  *												   												   *
- *               ____    ___     __      ___    ___    __  ___ __       ___   ___        	   	   *
- *               |__ |   |__ \_/||__)|   |__    |__ \_/|__)|__ |__)||\/||__ |\ || /\ |    	       *
- *               |   |___|___/ \||__)|___|___   |___/ \|   |___|  \||  ||___| \||/~~\|___ 	       *
- *                         ___     __  ___ __  __  ___ __     __     ________         		       *
- *                        |__ |\/||__)|__ |  \|  \|__ |  \   /__`\ //__`||__ |\/|     		       *
- *                        |___|  ||__)|___|__/|__/|___|__/   .__/ | .__/||___|  |     		       *
- *                                                                                       	       *
+ *                  __    __     __     __   __    __  __ __       __    ___                       *
+ *                 |_ |  |_ \_/||__)|  |_   |_ \_/|__)|_ |__)||\/||_ |\ | |  /\ |                  *
+ *                 |  |__|__/ \||__)|__|__  |__/ \|   |__| \ ||  ||__| \| | /--\|__                *
+ *                    __     __  __ __  __  __ __    __   ___ __       ___ __                      *
+ *                   |_ |\/||__)|_ |  \|  \|_ |  \  (_  /\ | |_ |  |  | | |_                       *
+ *                   |__|  ||__)|__|__/|__/|__|__/  __)/--\| |__|__|__| | |__                      *
+ *                                                                                                 *
  *												    											   *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *												   												   *
  *												   												   *
  *											FEES Project			 					           *
  *		    			URL: https://github.com/ferrandi/DEIB-DAER-project		                   *
@@ -36,20 +35,20 @@
  *		 			  ***********************************************************                  *
  *        		 	   		Copyright (c) 2018-2019 Politecnico di Milano				   		   *
  *                                                                                                 *
- *   This file is part of the FEES framework.                                                      *
+ *     This file is part of the FEES framework.                                                    *
  *                                                                                                 *
- *   The FEES framework is free software; you can redistribute it and/or modify                    *
- *   it under the terms of the GNU General Public License as published by                          *
- *   the Free Software Foundation; either version 3 of the License, or                             *
- *   (at your option) any later version.                                                           *
+ *     The FEES framework is free software; you can redistribute it and/or modify                  *
+ *     it under the terms of the GNU General Public License as published by                        *
+ *     the Free Software Foundation; either version 3 of the License, or                           *
+ *     (at your option) any later version.                                                         *
  *                                                                                                 *
- *   This program is distributed in the hope that it will be useful,                           	   *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of                                *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                                 *
- *   GNU General Public License for more details.                                                  *
+ *     This program is distributed in the hope that it will be useful,                             *
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of                              *
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                               *
+ *     GNU General Public License for more details.                                                *
  *                                                                                                 *
- *   You should have received a copy of the GNU General Public License                             *
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.                         *
+ *     You should have received a copy of the GNU General Public License                           *
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.                       *
  *                                                                                                 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
@@ -63,14 +62,16 @@
 
 #include "finiteStateMachine.h"
 #include <iostream>
+#include <cstdlib>
 #include <cstdint>
 
+#include "finiteStateMachine.h"
 #include "GpiosAndFunctions.h"
 
 using namespace std;
 
 //   States I/O Modifier
-// Serve a far in modo che la Cout dia il "Nome" dello stato e non il valore.
+// Serve a far in modo che la Cout dia il "Nome" dello stato e non il valore numerico (enum).
 std::ostream& operator<<(std::ostream& out, const state_t value) {
     const char* s = 0;
 #define PROCESS_VAL(p) case(p): s = #p; break;
@@ -90,33 +91,51 @@ std::ostream& operator<<(std::ostream& out, const state_t value) {
 
 
 void criticalMemoryRead(){ // Funzione di stub per il recupero memoria esecuzione precedente
+	//Da scrivere una funzione che legga dalle 3 memorie e che compari i dati delle 3 e che accetti solo i dati
+	// convalidati come attendibili (>=2)
+
+	// if(TripleMemoryCheck()==0){
 	cout << " Memoria critica non trovata - ( Nessuno Stato precedente trovato ) -> Procedo al primo boot " << endl << endl ;
+	//}
 }
+
+
 
 
 finiteStateMachine::finiteStateMachine() {
 	//  Auto-generated constructor stub
 	this->state = RECOVER_PREV_STATE;	// La FSM inizia con lo stato "Recupera Stato precedente"
 
-	criticalMemoryRead(); // Stub di recupero memoria, nel caso da questo la nuova classe attinge i dati precedenti.
+	criticalMemoryRead(); // Stub di recupero memoria precedente
+	// Nel caso in cui esista una memoria di stato precedente la si imposta come stato attuale.
+
+	//-Definizione delle variabili di oggetto
+
+	previous_state = RECOVER_PREV_STATE;	// Quando si inizializza il sistema si parte dal recupero dello stato precedente ( o stato iniziale)
+
+	//FLAGS
+	switch_vector= FALSE;			// Flag dello Switch Meccanico Cubesat-Lanciatore  0 = Attached, 1 = Detached. (Se switch_vector==0 (FALSE)  il thread di campionamento dello switch sará attivo.)
+	beacon_received=FALSE;			// Flag di Beacon Received
+	radex_scheduled=FALSE;			// Flag di Radex Scheduled
+	radex_finished=FALSE;			// Flag di Radex Finished
+	transmission_finished=FALSE;	// Flag di Fine Trasmissione
 
 
-	switch_vector= FALSE;		// 0 = Attached, 1 = Detached.
-	first_timer= 3600 ; 	//30 min
-	second_timer = 600 ; 	//10 min
-	timer_for_radex = 0;
-	previous_state = RECOVER_PREV_STATE;
-	beacon_received=FALSE;
-	radex_scheduled=FALSE;
-	radex_finished=FALSE;
-	transmission_finished=FALSE;
-	radex_timer = 300;
-	trx_timer = 300;
+	//TIMERS
+	first_timer= CONST_SILENZIO_RADIO ; 		// 30 min  --> Requisito di silenzio radio
+	second_timer = DETHUMBLING_TIMER ; 		// 10 min  --> Timer massimo di Dethumbling
+	timer_for_radex = 0;		// Timer di Scheduling del Rad-ex
+	radex_timer = CONST_RADEX_TIMER;			// Timer Time-Out del Rad-ex
+	trx_timer = CONST_TRX_TIMER;			// Timer Time-Out Trasmissione
+
+	angular_velocity= 8888888;	// Valore di inizializzazione Angular_velocity
 }
+
 
 finiteStateMachine::~finiteStateMachine() {
 	//  Auto-generated destructor stub
 }
+
 
 // Setters & Getters
 void finiteStateMachine::set(state_t a){
@@ -176,33 +195,34 @@ void finiteStateMachine::print_Variables(){
 // Handlers
 void finiteStateMachine::event_Handler(){
 	if((this->state==RECOVER_PREV_STATE)){
-										    if(this->previous_state != RECOVER_PREV_STATE){		//If there is a Saved previous state -
-										    												this->set(previous_state);} //These lines recover the previous state, if available.
+		if(this->previous_state != RECOVER_PREV_STATE){	 //If there is a Saved previous state -
+			this->set(previous_state);} //This line recovers the previous state, if available.
 
-										    else if(this->switch_vector==0){this->set(IN_VECTOR);}
-										    else if(this->first_timer  !=0){this->set(WAIT_FIRST_TIMER);}
-											else if(this->second_timer !=0){ this->set(DETUMBLE_SECOND_TIMER);}
-											else if((this->first_timer==0) & (this->second_timer==0)){ this->set(NOMINAL);}
-										    // These 4 lines decide the current State based on the known variableS
-											}
+		else if(this->switch_vector==0){this->set(IN_VECTOR);}
+		else if(this->first_timer  !=0){this->set(WAIT_FIRST_TIMER);}
+		else if(this->second_timer !=0){ this->set(DETUMBLE_SECOND_TIMER);}
+		else if((this->first_timer==0) & (this->second_timer==0)){ this->set(NOMINAL);}
+		// These 4 lines decide the current State based on the known variableS
+		// If The system Resets in RADEX or Transmission  and there is no reliable previous state in memory it goes back to Nominal.
+					}
 
 	// for Timer-Handling (loop this thread at 1hz)
 
 	if(this->state==IN_VECTOR)  {
-								if(this->switch_vector!=0){this->set(WAIT_FIRST_TIMER);}
-								}
+		if(this->switch_vector!=0){this->set(WAIT_FIRST_TIMER);}
+	}
 
 
 	if(this->state==WAIT_FIRST_TIMER){
-								      if(this->first_timer!=0){this->first_timer--;}
-								      else{this->set(DETUMBLE_SECOND_TIMER);}
-									  }
+	     if(this->first_timer!=0){this->first_timer--;}
+	     else{this->set(DETUMBLE_SECOND_TIMER);}
+	}
 
 
 	if(this->state==DETUMBLE_SECOND_TIMER) {
-											if(this->second_timer!=0){this->second_timer--;}
-											else{this->set(NOMINAL);}
-											}
+		if(this->second_timer!=0){this->second_timer--;}
+		else{this->set(NOMINAL);}
+	}
 
 
 	//if((this->switch_vector!=0) & (this->first_timer==0) & (this->second_timer==0) & (this->state!=TRANSMISSION) & (this->state!=RADEX_MODE)){this->set(NOMINAL); } // Nominal Check
@@ -210,27 +230,28 @@ void finiteStateMachine::event_Handler(){
 
 
 	if(this->state==NOMINAL){
-							if((this->radex_scheduled==TRUE) & (this->timer_for_radex != 0)){this->timer_for_radex--;}
-							if((this->radex_scheduled==TRUE) & (this->timer_for_radex == 0)) {this->set(RADEX_MODE); this->radex_timer=300; } // 5 Min RADEX timer
-							if(this->beacon_received==TRUE){this->set(TRANSMISSION); this->beacon_received=false; this->trx_timer=300; }  // 5 Min Transmission timer
-							cout << "IDLE" << endl;
-							this->previous_state=NOMINAL;
-							}
+		if((this->radex_scheduled==TRUE) & (this->timer_for_radex != 0)){this->timer_for_radex--;}
+		if((this->radex_scheduled==TRUE) & (this->timer_for_radex == 0)) {this->set(RADEX_MODE); this->radex_timer=CONST_RADEX_TIMER; } // Imposto il Timer di Time-out all'ingresso dello stato RADEX
+		if(this->beacon_received==TRUE){this->set(TRANSMISSION); this->beacon_received=false; this->trx_timer=CONST_TRX_TIMER; }  //Imposto il Timer di Time-out all'ingresso dello stato Transmission
+		cout << "IDLE" << endl;
+		this->previous_state=NOMINAL;
+	}
 
 
 	if(this->state==TRANSMISSION){
-								  if((this->transmission_finished==true )|( this->trx_timer==0)) {this->set(NOMINAL);}
-								  else{this->trx_timer--;}
-								 }
+		Transmission_Watchdog_ON();
+		if((this->transmission_finished==true )|( this->trx_timer==0)) {this->set(NOMINAL); Transmission_Watchdog_OFF(); }
+		else{this->trx_timer--;}
+	}
 
 
 
 	if(this->state==RADEX_MODE){
-								if((this->radex_finished==true )|(this->radex_timer==0)){ this->set(NOMINAL); this->radex_scheduled=FALSE;}
-								else{this->radex_timer--;}
-								}
-
+		if((this->radex_finished==true )|(this->radex_timer==0)){ this->set(NOMINAL); this->radex_scheduled=FALSE;}
+		else{this->radex_timer--;}
 	}
+}
+
 
 void finiteStateMachine::human_event_Handler(int a){
 	switch (a){
@@ -250,7 +271,7 @@ void finiteStateMachine::human_event_Handler(int a){
 		//cout << " Beacon received from earth, entering Transmission mode" << endl;
 		this->beacon_received=true;
 		this->transmission_finished=false;
-		this->trx_timer = 300;
+		this->trx_timer = CONST_TRX_TIMER;
 		this->set(TRANSMISSION);
 		break;
 	case 5:
@@ -270,8 +291,12 @@ void finiteStateMachine::human_event_Handler(int a){
 	default:
 		cout << " This choice is not correct. \n" <<endl;
 		break;
-
 	}
-
 }
+
+float finiteStateMachine::sample_angular_velocity(){
+	this->angular_velocity = rand();
+	return this->angular_velocity;
+}
+
 
