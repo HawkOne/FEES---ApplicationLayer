@@ -143,9 +143,17 @@ void finiteStateMachine::set(state_t a){
 	Update_Pin_Mask(a);
 	return;
 }
+void finiteStateMachine::setPrev(state_t a){
+	this->previous_state=a;
+	return;
+}
 state_t finiteStateMachine::get(){
 	return this->state;
 }
+state_t finiteStateMachine::getPrev(){
+	return this->previous_state;
+}
+
 
 // Printers
 void finiteStateMachine::print_State(){
@@ -232,8 +240,7 @@ void finiteStateMachine::event_Handler(){
 		if((this->radex_scheduled==TRUE) & (this->timer_for_radex != 0)){this->timer_for_radex--;}
 		if((this->radex_scheduled==TRUE) & (this->timer_for_radex == 0)) {this->set(RADEX_MODE); this->radex_timer=CONST_RADEX_TIMER; } // Imposto il Timer di Time-out all'ingresso dello stato RADEX
 		if(this->beacon_received==TRUE){this->set(TRANSMISSION); this->beacon_received=false; this->trx_timer=CONST_TRX_TIMER; }  //Imposto il Timer di Time-out all'ingresso dello stato Transmission
-		cout << "IDLE" << endl;
-		this->previous_state=NOMINAL;
+		// qui volendo si possono inserire azioni da fare ciclicamente in Nominal Mode
 	}
 
 

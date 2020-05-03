@@ -101,8 +101,13 @@ const float CONST_angular_velocity_Limit = 50;	// Valore di Angular_velocity_Lim
 class finiteStateMachine {
 
 public:
-	state_t get();
+
 	void set(state_t a);
+	void setPrev(state_t a);
+	state_t get();
+	state_t getPrev();
+
+
 	void print_State();
 	void print_Menu();
 	void print_StateList();
@@ -126,16 +131,13 @@ public:
 	float radex_timer;
 	float angular_velocity;
 
-
-	state_t previous_state;
-
-
 	// Constructor - Destructor
 	finiteStateMachine();
 	virtual ~finiteStateMachine();
 
 private:
 	state_t state;
+	state_t previous_state;
 };
 
 
