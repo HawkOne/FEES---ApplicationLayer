@@ -52,17 +52,18 @@
  *                                                                                                 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
- * FILE:Pinmask.cpp
+ * FILE: 2_Threads&Handlers.cpp  - Former GpiosAndFunctions
+ * DESCRIPTION: This file(s) Define and describe the core of the Housekeeping of the FEES System
  *
  *  Created on: 14 mar 2019
- *      Author: Stefano
+ *      Author: Stefano Ampolo
  */
 
 
+#include "1_Hardware&Drivers.h"
+#include "2_Threads&Handlers.h"
+#include "3_Application&FSM.h"
 
-#include "GpiosAndFunctions.h"
-
-#include "finiteStateMachine.h"
 #include <iostream>
 #include <cstdint>
 #include <thread>
@@ -72,7 +73,7 @@ using namespace std;
 
 bool GPIO[34];
 
-bool Flag_TELECOM_Active=0;
+bool Flag_Telecom_Active=0;
 bool Flag_Analog_Active=0;
 bool Flag_GPS_Active=0;
 bool Flag_Iridium_Active=0;
@@ -744,41 +745,41 @@ void GpioReset(int pin){
 // User-friendly -STUB Functions
 void print_PinMask(){
 
-								  cout << "    __________________________________________________" << endl ;
-								  cout << "   |                                                  |" << endl ;
-								  cout << "   |   --- --- ---  The GPIO MASK IS :  --- --- ---   |" << endl ;
-								  cout << "   |                                                  |" << endl ;
+								  cout << "\r    __________________________________________________" << endl ;
+								  cout << "\r   |                                                  |" << endl ;
+								  cout << "\r   |   --- --- ---  The GPIO MASK IS :  --- --- ---   |" << endl ;
+								  cout << "\r   |                                                  |" << endl ;
 	for(int i=0 ; i<34 ; i++){
-		if(i<10){if( (i%2) == 0){ cout << "   | - Gpio (0" << i << ") set to " << noboolalpha << GPIO[i] ;	}
+		if(i<10){if( (i%2) == 0){ cout << "\r   | - Gpio (0" << i << ") set to " << noboolalpha << GPIO[i] ;	}
 				 if( (i%2) != 0){ cout << "   | - Gpio (0" << i << ") set to " << noboolalpha << GPIO[i] << "  - |" << endl ; }}
-			else{if( (i%2) == 0){ cout << "   | - Gpio (" << i << ") set to " << noboolalpha << GPIO[i] ;}
+			else{if( (i%2) == 0){ cout << "\r   | - Gpio (" << i << ") set to " << noboolalpha << GPIO[i] ;}
 				 if( (i%2) != 0){ cout << "   | - Gpio (" << i << ") set to " << noboolalpha << GPIO[i] << "  - |" << endl ; }}}
-								  cout << "   |__________________________________________________|" << endl << endl ;
+								  cout << "\r   |__________________________________________________|" << endl << endl ;
 }
 void print_ThreadsAndManagers(){
-						  	   cout << endl << " |^^^^   FEES POWER and Threads  ^^^^|" << endl;
-	    if(Flag_TELECOM_Active)		 { cout << " |   - Telecom Module Power ON	     |" << endl ;}
-	    						else { cout << " |   - Telecom Module Power OFF	     |" << endl ;}
-	    if(Flag_Analog_Active)		 { cout << " |   - The Analog Power ON           |" << endl ;}
-	    						else { cout << " |   - The Analog Power OFF          |" << endl ;}
-	    if(Flag_GPS_Active)			 { cout << " |   - GPS Module Power ON           |" << endl ;}
-	    						else { cout << " |   - GPS Module Power OFF          |" << endl ;}
-	    if(Flag_Iridium_Active)		 { cout << " |   - Iridium Module Power ON       |" << endl ;}
-	    						else { cout << " |   - Iridium Module Power OFF      |" << endl ;}
-	    if(Flag_Radex_Active)		 { cout << " |   - RADiation EXperiment ON       |" << endl ;}
-	    						else { cout << " |   - RADiation EXperiment OFF      |" << endl ;}
-	   if(Flag_RaspberryPi_WD_Active){ cout << " |   - Raspberry Pi Power ON         |" << endl ;}
-	    						else { cout << " |   - Raspberry Pi Power OFF        |" << endl ;}
-	    							   cout << " |                                   |" << endl;
-	    if( Flag_ADCS_Active )		 { cout << " |   - ADCS Thread is  ACTIVE        |" << endl ;}
-	    						else { cout << " |   - ADCS Thread is NOT ACTIVE     |" << endl ;}
-	if(Flag_BatteryManagement_Active){ cout << " |   - Battery PID Th  ACTIVE        |" << endl ;}
-	    						else { cout << " |   - Battery PID Th NOT ACTIVE     |" << endl ;}
-	if(Flag_Hardware_Watchdog_Active){ cout << " |   - Hardware WD Th  ACTIVE        |" << endl ;}
-	    						else { cout << " |   - Hardware WD Th NOT ACTIVE     |" << endl ;}
- if(Flag_Transmission_Watchdog_Active){cout << " |   - TMTC WD Thread  ACTIVE        |" << endl ;}
-								else { cout << " |   - TMTC WD Thread NOT ACTIVE     |" << endl ;}
-									   cout << " |___________________________________|" << endl;
+						  	   cout << endl << "\r |^^^^   FEES POWER and Threads  ^^^^|" << endl;
+	    if(Flag_Telecom_Active)		 { cout << "\r |   - Telecom Module Power ON	     |" << endl ;}
+	    						else { cout << "\r |   - Telecom Module Power OFF	     |" << endl ;}
+	    if(Flag_Analog_Active)		 { cout << "\r |   - The Analog Power ON           |" << endl ;}
+	    						else { cout << "\r |   - The Analog Power OFF          |" << endl ;}
+	    if(Flag_GPS_Active)			 { cout << "\r |   - GPS Module Power ON           |" << endl ;}
+	    						else { cout << "\r |   - GPS Module Power OFF          |" << endl ;}
+	    if(Flag_Iridium_Active)		 { cout << "\r |   - Iridium Module Power ON       |" << endl ;}
+	    						else { cout << "\r |   - Iridium Module Power OFF      |" << endl ;}
+	    if(Flag_Radex_Active)		 { cout << "\r |   - RADiation EXperiment ON       |" << endl ;}
+	    						else { cout << "\r |   - RADiation EXperiment OFF      |" << endl ;}
+	   if(Flag_RaspberryPi_WD_Active){ cout << "\r |   - Raspberry Pi Power ON         |" << endl ;}
+	    						else { cout << "\r |   - Raspberry Pi Power OFF        |" << endl ;}
+	    							   cout << "\r |                                   |" << endl;
+	    if( Flag_ADCS_Active )		 { cout << "\r |   - ADCS Thread is  ACTIVE        |" << endl ;}
+	    						else { cout << "\r |   - ADCS Thread is NOT ACTIVE     |" << endl ;}
+	if(Flag_BatteryManagement_Active){ cout << "\r |   - Battery PID Th  ACTIVE        |" << endl ;}
+	    						else { cout << "\r |   - Battery PID Th NOT ACTIVE     |" << endl ;}
+	if(Flag_Hardware_Watchdog_Active){ cout << "\r |   - Hardware WD Th  ACTIVE        |" << endl ;}
+	    						else { cout << "\r |   - Hardware WD Th NOT ACTIVE     |" << endl ;}
+ if(Flag_Transmission_Watchdog_Active){cout << "\r |   - TMTC WD Thread  ACTIVE        |" << endl ;}
+								else { cout << "\r |   - TMTC WD Thread NOT ACTIVE     |" << endl ;}
+									   cout << "\r |___________________________________|" << endl;
 }
 
 // // // POWER MANAGEMENT Functions
@@ -802,7 +803,7 @@ void TELECOM_PowerON(){
 	// ACTUAL CHIBIOS FUNCTION
 	// hal.gpio->write( 0 , 1 );
 	GPIO[0]=1;
-	Flag_TELECOM_Active=TRUE;
+	Flag_Telecom_Active=TRUE;
 
 	// STUB PART
 	cout << " GPS POWER ON " << endl;
@@ -811,7 +812,7 @@ void TELECOM_PowerOFF(){
 	// ACTUAL CHIBIOS FUNCTION
 	// hal.gpio->write( 0 , 0 );
 	GPIO[0]=0;
-	Flag_TELECOM_Active=0;
+	Flag_Telecom_Active=0;
 
 	// STUB PART
 	cout << " GPS POWER ON " << endl;

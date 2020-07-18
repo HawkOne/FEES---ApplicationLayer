@@ -60,13 +60,13 @@
 
 
 
-#include "finiteStateMachine.h"
 #include <iostream>
 #include <cstdlib>
 #include <cstdint>
 
-#include "finiteStateMachine.h"
-#include "GpiosAndFunctions.h"
+#include "1_Hardware&Drivers.h"
+#include "2_Threads&Handlers.h"
+#include "3_Application&FSM.h"
 
 using namespace std;
 
@@ -157,7 +157,7 @@ state_t finiteStateMachine::getPrev(){
 
 // Printers
 void finiteStateMachine::print_State(){
-	cout << "  The current state is : " << state << endl <<endl << flush;
+	cout << "\r  The current state is : " << state << endl <<endl << flush;
 	return;
 }
 void finiteStateMachine::print_StateList(){
@@ -186,16 +186,17 @@ void finiteStateMachine::print_Menu(){
 	cout << " 8 - SET RADEX to Finished  " << endl << endl << flush;
 }
 void finiteStateMachine::print_Variables(){
-		cout << "  Outside the Rocket?     -->\t" << boolalpha << this->switch_vector << endl
-			 << "  Timer 30 minutes        -->\t" << this->first_timer << endl
-			 << "  Dethumbling timer       -->\t" << this->second_timer << endl
-			 << "  Radex Scheduled?        -->\t" << boolalpha << this->radex_scheduled << endl
-			 << "  Timer-Scheduler Radex   -->\t" << this->timer_for_radex << endl
-			 << "  Radex-Out Timer         -->\t" << this->radex_timer<< endl
-			 << "  Transmission timer      -->\t" << this->trx_timer << endl
-			 << "  Beacon Received         -->\t" << boolalpha << this->beacon_received << endl
-			 << "  Transmission finished   -->\t" << boolalpha << this->transmission_finished << endl
-			 << "  Previous State          -->\t" << this->previous_state << endl << endl << flush;
+		cout << "\r --- Flags and Counters --- " << endl
+			 <<	"\r  Outside the Rocket?     -->\t" << boolalpha << this->switch_vector << endl
+			 << "\r  Timer 30 minutes        -->\t" << this->first_timer << endl
+			 << "\r  Dethumbling timer       -->\t" << this->second_timer << endl
+			 << "\r  Radex Scheduled?        -->\t" << boolalpha << this->radex_scheduled << endl
+			 << "\r  Timer-Scheduler Radex   -->\t" << this->timer_for_radex << endl
+			 << "\r  Radex-Out Timer         -->\t" << this->radex_timer<< endl
+			 << "\r  Transmission timer      -->\t" << this->trx_timer << endl
+			 << "\r  Beacon Received         -->\t" << boolalpha << this->beacon_received << endl
+			 << "\r  Transmission finished   -->\t" << boolalpha << this->transmission_finished << endl
+			 << "\r  Previous State          -->\t" << this->previous_state << endl << endl << flush;
 
 }
 
