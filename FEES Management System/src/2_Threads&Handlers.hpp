@@ -59,15 +59,15 @@
  *      Author: Stefano Ampolo
  */
 
-#ifndef PINMASK_H
-#define PINMASK_H
+#ifndef THREADSANDHANDLERS_HPP
+#define THREADSANDHANDLERS_HPP
 
 #include <iostream>
 #include <cstdint>
 
-#include "1_Hardware&Drivers.h"
-#include "2_Threads&Handlers.h"
-#include "3_Application&FSM.h"
+#include "1_Hardware&Drivers.hpp"
+#include "2_Threads&Handlers.hpp"
+#include "3_Application&FSM.hpp"
 
 using namespace std;
 
@@ -168,4 +168,4 @@ void thread_TransmissionWD();
 
 
 
-#endif // PINMASK_H
+#endif // THREADSANDHANDLERS_HPP

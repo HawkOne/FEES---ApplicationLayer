@@ -64,9 +64,9 @@
 #include <cstdlib>
 #include <cstdint>
 
-#include "1_Hardware&Drivers.h"
-#include "2_Threads&Handlers.h"
-#include "3_Application&FSM.h"
+#include "1_Hardware&Drivers.hpp"
+#include "2_Threads&Handlers.hpp"
+#include "3_Application&FSM.hpp"
 
 using namespace std;
 
@@ -114,7 +114,7 @@ finiteStateMachine::finiteStateMachine() {
 	previous_state = RECOVER_PREV_STATE;	// Quando si inizializza il sistema si parte dal recupero dello stato precedente ( o stato iniziale)
 
 	//FLAGS
-	switch_vector= FALSE;			// Flag dello Switch Meccanico Cubesat-Lanciatore  0 = Attached, 1 = Detached. (Se switch_vector==0 (FALSE)  il thread di campionamento dello switch sará attivo.)
+	switch_vector= FALSE;			// Flag dello Switch Meccanico Cubesat-Lanciatore  0 = Attached, 1 = Detached. (Se switch_vector==0 (FALSE)  il thread di campionamento dello switch sarï¿½ attivo.)
 	beacon_received=FALSE;			// Flag di Beacon Received
 	radex_scheduled=FALSE;			// Flag di Radex Scheduled
 	radex_finished=FALSE;			// Flag di Radex Finished

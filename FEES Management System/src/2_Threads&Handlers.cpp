@@ -60,9 +60,9 @@
  */
 
 
-#include "1_Hardware&Drivers.h"
-#include "2_Threads&Handlers.h"
-#include "3_Application&FSM.h"
+#include "1_Hardware&Drivers.hpp"
+#include "2_Threads&Handlers.hpp"
+#include "3_Application&FSM.hpp"
 
 #include <iostream>
 #include <cstdint>
@@ -148,7 +148,9 @@ void Pin_Mask_All_OFF(){
 	//Iridium_PowerON();
 	Iridium_PowerOFF();
 	//Iridium_PowerRESET();
+
 	// IRIDIUM	CONTROL
+#ifdef ARDUPILOT
 	GpioReset(SDB_0);
 	GpioReset(SDB_1);
 	GpioReset(SDB_2);
@@ -157,14 +159,16 @@ void Pin_Mask_All_OFF(){
 	GpioReset(SDB_5);
 	GpioReset(SDB_6);
 	GpioReset(SDB_7);
-
+#endif // ADUPILOT
 	/******************************| RAD-Experiment PAYLOAD    (PE1)*( GPIO 5 )  ******/
 	//Radex_PowerON();
 	Radex_PowerOFF();
 	//Radex_PowerRESET();
 
 	// RADEX SIGNAL
+#ifdef ARDUPILOT
 	GpioReset(RADFET_OWB);	//Radex One-Wire Temp-Signal
+#endif // ADUPILOT
 
 	//Radex_SignalRESET();   // Signal GPIO 6 - This RESETS THE 32BitAdc
 
@@ -197,9 +201,12 @@ void Pin_Mask_All_OFF(){
 	//GpioReset(BATTERY_HEATER_GPIO);
 
 	/******************************	WatchDog  Control 	***************************/
+#ifdef ARDUPILOT
 	GpioReset(WATCHDOG);
+#endif // ADUPILOT
 
 	/******************************	EXTERNAL GPIO  Control ************************/
+#ifdef ARDUPILOT
 	//GpioSet(EX_GPIO_1);
 	GpioReset(EX_GPIO_1);
 
@@ -211,17 +218,23 @@ void Pin_Mask_All_OFF(){
 
 	//GpioSet(EX_GPIO_4);
 	GpioReset(EX_GPIO_4);
+#endif // ADUPILOT
 
 
 	/******************************	LED - TELECOM WATCHDOG  Control  (GPIO 19) ****/
+#ifdef ARDUPILOT
 	GpioReset(LED); // Led - Attivo Basso
+#endif // ADUPILOT
 	
 
 	/******************************	PSD SELECTOR  Control  ******************* ****/
+#ifdef ARDUPILOT
 	GpioReset(PSD_0);
 	GpioReset(PSD_1);
 	GpioReset(PSD_2);
 	GpioReset(PSD_3);
+#endif // ADUPILOT
+
 }
 void Pin_Mask_InVector(){
 	Pin_Mask_All_OFF();
@@ -250,6 +263,7 @@ void Pin_Mask_Wait(){
 	Iridium_PowerOFF();
 	//Iridium_PowerRESET();
 	// IRIDIUM	CONTROL
+#ifdef ARDUPILOT
 	GpioReset(SDB_0);
 	GpioReset(SDB_1);
 	GpioReset(SDB_2);
@@ -258,6 +272,7 @@ void Pin_Mask_Wait(){
 	GpioReset(SDB_5);
 	GpioReset(SDB_6);
 	GpioReset(SDB_7);
+#endif // ADUPILOT
 
 	/******************************| RAD-Experiment PAYLOAD    (PE1)*( GPIO 5 )  ******/
 	//Radex_PowerON();
@@ -265,7 +280,9 @@ void Pin_Mask_Wait(){
 	//Radex_PowerRESET();
 
 	// RADEX SIGNAL
+#ifdef ARDUPILOT
 	GpioReset(RADFET_OWB);	//Radex One-Wire Temp-Signal
+#endif // ADUPILOT
 
 	//Radex_SignalRESET();   // Signal GPIO 6 - This RESETS THE 32BitAdc
 
@@ -298,9 +315,12 @@ void Pin_Mask_Wait(){
 	//GpioReset(BATTERY_HEATER_GPIO);
 
 	/******************************	WatchDog  Control 	***************************/
+#ifdef ARDUPILOT
 	GpioReset(WATCHDOG);
+#endif // ADUPILOT
 
 	/******************************	EXTERNAL GPIO  Control ************************/
+#ifdef ARDUPILOT
 	//GpioSet(EX_GPIO_1);
 	GpioReset(EX_GPIO_1);
 
@@ -312,17 +332,21 @@ void Pin_Mask_Wait(){
 
 	//GpioSet(EX_GPIO_4);
 	GpioReset(EX_GPIO_4);
+#endif // ADUPILOT
 
 
 	/******************************	LED - TELECOM WATCHDOG  Control  (GPIO 19) ****/
+#ifdef ARDUPILOT
 	GpioReset(LED); // Led - Attivo Basso
-
+#endif // ADUPILOT
 
 	/******************************	PSD SELECTOR  Control  ******************* ****/
+#ifdef ARDUPILOT
 	GpioReset(PSD_0);
 	GpioReset(PSD_1);
 	GpioReset(PSD_2);
 	GpioReset(PSD_3);
+#endif // ADUPILOT
 
 }
 void Pin_Mask_Detumble(){
@@ -349,6 +373,7 @@ void Pin_Mask_Detumble(){
 	Iridium_PowerOFF();
 	//Iridium_PowerRESET();
 	// IRIDIUM	CONTROL
+#ifdef ARDUPILOT
 	GpioReset(SDB_0);
 	GpioReset(SDB_1);
 	GpioReset(SDB_2);
@@ -357,6 +382,7 @@ void Pin_Mask_Detumble(){
 	GpioReset(SDB_5);
 	GpioReset(SDB_6);
 	GpioReset(SDB_7);
+#endif // ADUPILOT
 
 	/******************************| RAD-Experiment PAYLOAD    (PE1)*( GPIO 5 )  ******/
 	//Radex_PowerON();
@@ -364,7 +390,9 @@ void Pin_Mask_Detumble(){
 	//Radex_PowerRESET();
 
 	// RADEX SIGNAL
+#ifdef ARDUPILOT
 	GpioReset(RADFET_OWB);	//Radex One-Wire Temp-Signal
+#endif // ADUPILOT
 
 	//Radex_SignalRESET();   // Signal GPIO 6 - This RESETS THE 32BitAdc
 
@@ -397,9 +425,12 @@ void Pin_Mask_Detumble(){
 	//GpioReset(BATTERY_HEATER_GPIO);
 
 	/******************************	WatchDog  Control 	***************************/
+#ifdef ARDUPILOT
 	GpioReset(WATCHDOG);
+#endif // ADUPILOT
 
 	/******************************	EXTERNAL GPIO  Control ************************/
+#ifdef ARDUPILOT
 	//GpioSet(EX_GPIO_1);
 	GpioReset(EX_GPIO_1);
 
@@ -411,17 +442,22 @@ void Pin_Mask_Detumble(){
 
 	//GpioSet(EX_GPIO_4);
 	GpioReset(EX_GPIO_4);
+#endif // ADUPILOT
 
 
 	/******************************	LED - TELECOM WATCHDOG  Control  (GPIO 19) ****/
+#ifdef ARDUPILOT
 	GpioReset(LED); // Led - Attivo Basso
-	
+#endif // ADUPILOT
+
 
 	/******************************	PSD SELECTOR  Control  ******************* ****/
+#ifdef ARDUPILOT
 	GpioReset(PSD_0);
 	GpioReset(PSD_1);
 	GpioReset(PSD_2);
 	GpioReset(PSD_3);
+#endif // ADUPILOT
 
 }
 void Pin_Mask_Nominal(){
@@ -448,6 +484,7 @@ void Pin_Mask_Nominal(){
 	Iridium_PowerOFF();
 	//Iridium_PowerRESET();
 	// IRIDIUM	CONTROL
+#ifdef ARDUPILOT
 	GpioReset(SDB_0);
 	GpioReset(SDB_1);
 	GpioReset(SDB_2);
@@ -456,6 +493,7 @@ void Pin_Mask_Nominal(){
 	GpioReset(SDB_5);
 	GpioReset(SDB_6);
 	GpioReset(SDB_7);
+#endif // ADUPILOT
 
 	/******************************| RAD-Experiment PAYLOAD    (PE1)*( GPIO 5 )  ******/
 	//Radex_PowerON();
@@ -463,7 +501,9 @@ void Pin_Mask_Nominal(){
 	//Radex_PowerRESET();
 
 	// RADEX SIGNAL
+#ifdef ARDUPILOT
 	GpioReset(RADFET_OWB);	//Radex One-Wire Temp-Signal
+#endif // ADUPILOT
 
 	//Radex_SignalRESET();   // Signal GPIO 6 - This RESETS THE 32BitAdc
 
@@ -496,9 +536,12 @@ void Pin_Mask_Nominal(){
 	//GpioReset(BATTERY_HEATER_GPIO);
 
 	/******************************	WatchDog  Control 	***************************/
+#ifdef ARDUPILOT
 	GpioReset(WATCHDOG);
+#endif // ADUPILOT
 
 	/******************************	EXTERNAL GPIO  Control ************************/
+#ifdef ARDUPILOT
 	//GpioSet(EX_GPIO_1);
 	GpioReset(EX_GPIO_1);
 
@@ -510,18 +553,23 @@ void Pin_Mask_Nominal(){
 
 	//GpioSet(EX_GPIO_4);
 	GpioReset(EX_GPIO_4);
+#endif // ADUPILOT
 
 
 	/******************************	LED - TELECOM WATCHDOG  Control  (GPIO 19) ****/
+#ifdef ARDUPILOT
 	GpioReset(LED); // Led - Attivo Basso
+#endif // ADUPILOT
 
 	/******************************	PSD SELECTOR  Control  ******************* ****/
+#ifdef ARDUPILOT
 	GpioReset(PSD_0);
 	GpioReset(PSD_1);
 	GpioReset(PSD_2);
 	GpioReset(PSD_3);
-
+#endif // ADUPILOT
 }
+
 void Pin_Mask_Transmission(){
 
 	//	PAYLOAD CONTROL
@@ -546,6 +594,7 @@ void Pin_Mask_Transmission(){
 	//Iridium_PowerOFF();
 	//Iridium_PowerRESET();
 	// IRIDIUM	CONTROL
+#ifdef ARDUPILOT
 	GpioReset(SDB_0);
 	GpioReset(SDB_1);
 	GpioReset(SDB_2);
@@ -554,6 +603,7 @@ void Pin_Mask_Transmission(){
 	GpioReset(SDB_5);
 	GpioReset(SDB_6);
 	GpioReset(SDB_7);
+#endif // ADUPILOT
 
 	/******************************| RAD-Experiment PAYLOAD    (PE1)*( GPIO 5 )  ******/
 	//Radex_PowerON();
@@ -561,7 +611,9 @@ void Pin_Mask_Transmission(){
 	//Radex_PowerRESET();
 
 	// RADEX SIGNAL
+#ifdef ARDUPILOT
 	GpioReset(RADFET_OWB);	//Radex One-Wire Temp-Signal
+#endif // ADUPILOT
 
 	//Radex_SignalRESET();   // Signal GPIO 6 - This RESETS THE 32BitAdc
 
@@ -597,6 +649,7 @@ void Pin_Mask_Transmission(){
 	//GpioReset(WATCHDOG);
 
 	/******************************	EXTERNAL GPIO  Control ************************/
+#ifdef ARDUPILOT
 	//GpioSet(EX_GPIO_1);
 	GpioReset(EX_GPIO_1);
 
@@ -608,17 +661,21 @@ void Pin_Mask_Transmission(){
 
 	//GpioSet(EX_GPIO_4);
 	GpioReset(EX_GPIO_4);
-
+#endif // ADUPILOT
 
 	/******************************	LED - TELECOM WATCHDOG  Control  (GPIO 19) ****/
+#ifdef ARDUPILOT
 	GpioReset(LED); // Led - Attivo Basso
-	
+#endif // ADUPILOT
+
 
 	/******************************	PSD SELECTOR  Control  ******************* ****/
+#ifdef ARDUPILOT
 	GpioReset(PSD_0);
 	GpioReset(PSD_1);
 	GpioReset(PSD_2);
 	GpioReset(PSD_3);
+#endif // ADUPILOT
 
 }
 void Pin_Mask_RADEX(){
@@ -645,6 +702,7 @@ void Pin_Mask_RADEX(){
 	Iridium_PowerOFF();
 	//Iridium_PowerRESET();
 	// IRIDIUM	CONTROL
+#ifdef ARDUPILOT
 	GpioReset(SDB_0);
 	GpioReset(SDB_1);
 	GpioReset(SDB_2);
@@ -653,6 +711,7 @@ void Pin_Mask_RADEX(){
 	GpioReset(SDB_5);
 	GpioReset(SDB_6);
 	GpioReset(SDB_7);
+#endif // ADUPILOT
 
 	/******************************| RAD-Experiment PAYLOAD    (PE1)*( GPIO 5 )  ******/
 	Radex_PowerON();
@@ -695,9 +754,12 @@ void Pin_Mask_RADEX(){
 	//GpioReset(BATTERY_HEATER_GPIO);
 
 	/******************************	WatchDog  Control 	***************************/
+#ifdef ARDUPILOT
 	GpioReset(WATCHDOG);
+#endif // ADUPILOT
 
 	/******************************	EXTERNAL GPIO  Control ************************/
+#ifdef ARDUPILOT
 	//GpioSet(EX_GPIO_1);
 	GpioReset(EX_GPIO_1);
 
@@ -709,17 +771,22 @@ void Pin_Mask_RADEX(){
 
 	//GpioSet(EX_GPIO_4);
 	GpioReset(EX_GPIO_4);
+#endif // ADUPILOT
 
 
 	/******************************	LED - TELECOM WATCHDOG  Control  (GPIO 19) ****/
+#ifdef ARDUPILOT
 	GpioReset(LED); // Led - Attivo Basso
-	
+#endif // ADUPILOT
+
 
 	/******************************	PSD SELECTOR  Control  ******************* ****/
+#ifdef ARDUPILOT
 	GpioReset(PSD_0);
 	GpioReset(PSD_1);
 	GpioReset(PSD_2);
 	GpioReset(PSD_3);
+#endif // ADUPILOT
 
 }
 
@@ -1100,17 +1167,20 @@ void thread_HardwareWD(){ 		// GPIO 20
 			//std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		}}
 }
+
 void thread_TransmissionWD(){ 	// GPIO 19
 	// ACTUAL CHIBIOS FUNCTION
-		while(1){
-			if(Flag_Transmission_Watchdog_Active==1){
+	while(1){
+		if(Flag_Transmission_Watchdog_Active==1){
 				//hal.gpio->write( 19 , 1 );
 				//std::this_thread::sleep_for(std::chrono::milliseconds(50));
 				//hal.gpio->write( 19, 0 );
 				//std::this_thread::sleep_for(std::chrono::milliseconds(50));
 				}
-		}
-		// Inserire la funzione
-		// Trasmetti BEACON
-		// Cerca GroundStationBeacon --> fsm.beacon_received=TRUE; //se trovata
+			}
+	// Inserire la funzione
+	// Trasmetti BEACON
+	// Cerca GroundStationBeacon --> fsm.beacon_received=TRUE; //se trovata
 }
+
+

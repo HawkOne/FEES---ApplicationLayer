@@ -65,9 +65,7 @@
 //============================================================================
 
 
-#include "1_Hardware&Drivers.h"
-#include "2_Threads&Handlers.h"
-#include "3_Application&FSM.h"
+
 
 
 

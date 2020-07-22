@@ -58,6 +58,24 @@
  *      Author: Stefano Ampolo
  */
 
+
+//------- COMPILING SETTINGS ----------//
+
+//#define WINDOWS
+//#define LINUX
+
+//#define ARDUPILOT
+//#define FREERTOS
+//#define CHIBIOS
+//#define BAREMETAL  //ST's HAL LIBRARIES
+
+//#define UNIT_TESTING
+
+//------- ------- ------- ------ ----- //
+
+
+
+
 #include <stdlib.h>
 #include <cstdlib>
 #include <sys/types.h>
@@ -68,18 +86,15 @@
 #include <ctime>
 #include <limits.h>
 
-#include <dos.h> //for delay
-
-#include "1_Hardware&Drivers.h"
-#include "2_Threads&Handlers.h"
-#include "3_Application&FSM.h"
+#include "1_Hardware&Drivers.hpp"
+#include "2_Threads&Handlers.hpp"
+#include "3_Application&FSM.hpp"
 
 using namespace std;
 
 
 
 //void FSM();
-
 
 
 void print_SystemTime();
@@ -89,7 +104,7 @@ void print_SystemTime();
 ///////////////////////////////////////////
 
 clock_t startTime;
-unsigned double deltaTime;
+float deltaTime;
 
 finiteStateMachine fsm; // Finite State Machine definition
 
@@ -175,14 +190,22 @@ void thread_UserShell(){ // 24hrz Thread loop
 		// Sleep this thread for 500 MilliSeconds
 		std::this_thread::sleep_for(std::chrono::milliseconds(100)); //1000
 
+
+#ifdef WINDOWS
 		system("CLS");
+#endif // WINDOWS
+
+#ifdef LINUX
+		std::system("clear");
+#endif // LINUX
+
 	}
 }
 
 
 
 void print_SystemTime(){
-	deltaTime = ((unsigned double)( std::clock() - startTime )) / (unsigned double) CLOCKS_PER_SEC;
+	deltaTime = (( std::clock() - startTime )) / (float) CLOCKS_PER_SEC;
 	cout << "\r  System Time is:  "<< deltaTime << endl;
 }
 

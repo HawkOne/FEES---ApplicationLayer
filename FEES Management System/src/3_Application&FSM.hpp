@@ -58,8 +58,8 @@
  *      Author: Stefano
  */
 
-#ifndef STATE_H
-#define STATE_H
+#ifndef APPLICATIONSANDFSM_HPP
+#define APPLICATIONSANDFSM_HPP
 
 #define TRUE true
 #define FALSE false
@@ -69,9 +69,9 @@
 #include <iostream>
 #include <cstdint>
 
-#include "1_Hardware&Drivers.h"
-#include "2_Threads&Handlers.h"
-#include "3_Application&FSM.h"
+#include "1_Hardware&Drivers.hpp"
+#include "2_Threads&Handlers.hpp"
+#include "3_Application&FSM.hpp"
 
 
 using namespace std;
@@ -148,5 +148,5 @@ private:
 void Update_Pin_Mask(state_t NewState);
 
 
-#endif 	/* STATE_H */
+#endif 	/* APPLICATIONSANDFSM_HPP */
 
