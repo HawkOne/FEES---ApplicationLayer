@@ -64,10 +64,10 @@
 //#define WINDOWS
 //#define LINUX
 
+#define BAREMETAL  //ST's HAL LIBRARIES
 //#define ARDUPILOT
 //#define FREERTOS
 //#define CHIBIOS
-//#define BAREMETAL  //ST's HAL LIBRARIES
 
 //#define UNIT_TESTING
 
