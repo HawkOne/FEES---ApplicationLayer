@@ -165,7 +165,6 @@ int main() {
 
 
 
-
 // Thread for FiniteStateMachine update-handling
 void thread_Fsm(){ // 1Hz Thread loop
 	while(1){
