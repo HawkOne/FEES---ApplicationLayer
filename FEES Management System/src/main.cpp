@@ -162,7 +162,7 @@ void thread_UserShell(){ // 24hrz Thread loop
 		fsm.print_Menu();
 		//th.lock
 		// Sleep this thread for 1000 MilliSeconds (to time all 1 second)
-		std::this_thread::sleep_for(std::chrono::milliseconds(200)); //1000
+		std::this_thread::sleep_for(std::chrono::milliseconds(50)); //1000
 
 		system("CLS");
 

@@ -128,11 +128,8 @@ finiteStateMachine::finiteStateMachine() {
 	radex_timer = CONST_RADEX_TIMER;			// Timer Time-Out del Rad-ex
 	trx_timer = CONST_TRX_TIMER;			// Timer Time-Out Trasmissione
 
-<<<<<<< HEAD
-	angular_velocity()= 8888888;	// Valore di inizializzazione Angular_velocity
-=======
+
 	angular_velocity= 8888888;	// Valore di inizializzazione Angular_velocity
->>>>>>> Pre-Testing
 }
 
 
@@ -299,12 +296,9 @@ void finiteStateMachine::human_event_Handler(int a){
 }
 
 float finiteStateMachine::sample_angular_velocity(){
-<<<<<<< HEAD
-	fsm->angular_velocity = rand();
-=======
+
 	this->angular_velocity = rand();
 	return this->angular_velocity;
->>>>>>> Pre-Testing
 }
 
 

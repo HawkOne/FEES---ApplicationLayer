@@ -109,11 +109,7 @@ public:
 	void print_Variables();
 	void event_Handler();
 	void human_event_Handler(int a);
-<<<<<<< HEAD
-	float sample_angular_velocity(){
-=======
 	float sample_angular_velocity();
->>>>>>> Pre-Testing
 
 
 	bool switch_vector;
@@ -144,10 +140,7 @@ private:
 
 
 
-<<<<<<< HEAD
 
-=======
->>>>>>> Pre-Testing
 void Update_Pin_Mask(state_t NewState);
 
 
