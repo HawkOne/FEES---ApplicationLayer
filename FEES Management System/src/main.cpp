@@ -188,7 +188,7 @@ void thread_UserShell(){ // 24hrz Thread loop
 
 		fsm.print_Menu();
 		// Sleep this thread for 500 MilliSeconds
-		std::this_thread::sleep_for(std::chrono::milliseconds(100)); //1000
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000)); //1000
 
 
 #ifdef WINDOWS

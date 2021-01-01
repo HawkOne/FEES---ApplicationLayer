@@ -89,6 +89,7 @@ struct gpio_stm32 {
 
 
 
+/*
 
 
 # USB setup
@@ -197,6 +198,7 @@ STDOUT_BAUDRATE 57600
  PE14 SBD_SER_RI OUTPUT LOW GPIO(27)
  PE15 SBD_SER_NET OUTPUT LOW GPIO(28)
 
+*/
 
 
 
